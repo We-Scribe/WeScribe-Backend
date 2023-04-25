@@ -7,4 +7,5 @@ from rest_framework.decorators import api_view
 def api_root(request, format=None):
     return Response({
         'users': reverse('user-list', request=request, format=format),
+        'notes': reverse('notes-list', request=request, format=format),
     })
