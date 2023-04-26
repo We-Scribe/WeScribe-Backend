@@ -19,3 +19,16 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             password = validated_data.pop('password')
             instance.set_password(password)
         return super(UserRegistrationSerializer, self).update(instance, validated_data)
+
+
+class UserUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ('id', 'first_name', 'last_name', 'username',
+                  'email', 'password')
+        read_only_fields = ('username', 'email', 'password')
+
+
+class UpdatePasswordSerializer(serializers.Serializer):
+    current_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
