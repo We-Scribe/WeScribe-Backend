@@ -1,8 +1,8 @@
 from rest_framework import generics, permissions
 
-from users.models import CustomUser
-from notes.models import Notes
-from notes.serializers import NotesSerializer
+from .models import Notes
+from .serializers import NotesSerializer
+from .permissions import IsOwnerOrReadOnly
 
 class NotesListAPI(generics.ListCreateAPIView):
     """
@@ -10,6 +10,7 @@ class NotesListAPI(generics.ListCreateAPIView):
     """
     serializer_class = NotesSerializer
     queryset = Notes.objects.all()
+    permission_classes = [permissions.IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -20,7 +21,7 @@ class NotesDetailAPI(generics.RetrieveUpdateDestroyAPIView):
     """
     serializer_class = NotesSerializer
     queryset = Notes.objects.all()
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)

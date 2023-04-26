@@ -1,8 +1,9 @@
 from rest_framework import serializers
-from rest_framework.reverse import reverse
 from .models import Notes
 
 class NotesSerializer(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField(source="user.username")
+
     class Meta:
         model = Notes
         fields = ('id', 'user', 'content')
