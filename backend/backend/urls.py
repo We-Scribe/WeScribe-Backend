@@ -8,4 +8,5 @@ urlpatterns = [
     path('', include('users.urls')),
     path('', include('notes.urls')),
     path('api/', include('rest_framework.urls')),
+    path('rest-auth/', include('rest_auth.urls')),
 ]
