@@ -9,7 +9,7 @@ class NotesListAPI(generics.ListCreateAPIView):
     This view provides 'list' of all notes and 'create' new notes.
     """
     serializer_class = NotesSerializer
-    queryset = Notes.objects.all()
+    queryset = Notes.objects.all().order_by('-id')
     permission_classes = [permissions.IsAuthenticated]
 
     def perform_create(self, serializer):
