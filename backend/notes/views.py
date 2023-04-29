@@ -10,7 +10,7 @@ class NotesListAPI(generics.ListCreateAPIView):
     """
     serializer_class = NotesSerializer
     queryset = Notes.objects.all().order_by('-id')
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)

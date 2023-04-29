@@ -1,4 +1,4 @@
-<h1 align="center">CIS Hackathon Backend</h1>
+<h1 align="center">WeScribe Backend</h1>
 
 ![Django Version](https://img.shields.io/badge/Django-3.1.6-brightgreen) ![Django Rest](https://img.shields.io/badge/Django%20rest%20framework-3.12.2-brightgreen)
 
@@ -7,14 +7,22 @@
 	python3 -m venv venv
 	. venv/bin/activate
 	pip install -r requirements.txt
+	cd backend
+	python3 manage.py makemigrations
+	python3 manage.py migrate
 
 ### Run the application
 
 	python3 manage.py runserver
 
+### Sample credentials
+
+	Username: admin
+	Password: admin@1234
+
 ## About the repo
 
-This is the backend of CIS-Hackathon website
+This is the backend of WeScribe website.
 
 ### API Documentation:
 -----------------
