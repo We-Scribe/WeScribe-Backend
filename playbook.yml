@@ -1,0 +1,9 @@
+---
+- name: Deploying backend with Kubernetes
+  hosts: localhost
+  remote_user: dhanush
+  tasks:
+    - name: create backend deployment and service
+      kubernetes.core.k8s:
+        definition: "{{ lookup('file', './backend-deployent-service.yaml') | from_yaml }}"
+        state: present
