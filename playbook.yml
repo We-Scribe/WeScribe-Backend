@@ -5,7 +5,7 @@
 
   collections:
     - community.kubernetes
-    
+
   tasks:
     - name: create backend deployment
       kubernetes.core.k8s:
