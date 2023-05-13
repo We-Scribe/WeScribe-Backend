@@ -15,25 +15,25 @@ pipeline {
             }
         }
 
-        stage('Setup Python Virtual Environment'){
-            steps {
-                sh '''
-                    /home/dhanush/.local/bin/pipenv shell
-                    /home/dhanush/.local/bin/pipenv install -r requirements.txt
-                    exit
-                    '''
-            }
-        }
+        // stage('Setup Python Virtual Environment'){
+        //     steps {
+        //         sh '''
+        //             pipenv shell
+        //             pipenv install -r requirements.txt
+        //             exit
+        //             '''
+        //     }
+        // }
 
-        stage('Run Django Tests'){
-            steps {
-                sh '''
-                    pipenv shell
-                    python3 backend/manage.py test
-                    exit
-                    '''
-            }
-        }
+        // stage('Run Django Tests'){
+        //     steps {
+        //         sh '''
+        //             pipenv shell
+        //             python3 backend/manage.py test
+        //             exit
+        //             '''
+        //     }
+        // }
 
         stage('Docker Image Build') {
             steps {

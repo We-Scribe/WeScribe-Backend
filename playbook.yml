@@ -6,11 +6,11 @@
   #   - community.kubernetes
   tasks:
 
-    # - name: Check Minikube status
-    #   command: minikube status
-    #   register: minikube_status
-    #   changed_when: false
-    #   failed_when: false
+    - name: Check Minikube status
+      command: minikube status
+      register: minikube_status
+      changed_when: false
+      failed_when: false
 
     - name: Start Minikube
       become: false
