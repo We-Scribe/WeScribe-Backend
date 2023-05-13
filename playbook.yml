@@ -6,17 +6,18 @@
   #   - community.kubernetes
   tasks:
 
-    - name: Check Minikube status
-      command: minikube status
-      register: minikube_status
-      changed_when: false
-      failed_when: false
+    # - name: Check Minikube status
+    #   command: minikube status
+    #   register: minikube_status
+    #   changed_when: false
+    #   failed_when: false
 
     - name: Start Minikube
       become: false
       # command: minikube start --cpus 4 --memory 8192
       command: minikube start
-      when: "'Running' not in minikube_status.stdout"
+      when: true
+      # when: "'Running' not in minikube_status.stdout"
 
     - name: Installing Addons
       become: false
