@@ -2,6 +2,10 @@
 - name: Deploying backend with Kubernetes
   hosts: localhost
   remote_user: dhanush
+
+  collections:
+    - community.kubernetes
+    
   tasks:
     - name: create backend deployment
       kubernetes.core.k8s:
