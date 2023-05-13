@@ -18,8 +18,8 @@ pipeline {
         stage('Setup Python Virtual Environment'){
             steps {
                 sh '''
-                    pipenv shell
-                    pipenv install -r requirements.txt
+                    /home/dhanush/.local/bin/pipenv shell
+                    /home/dhanush/.local/bin/pipenv install -r requirements.txt
                     exit
                     '''
             }
