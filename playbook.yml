@@ -3,7 +3,11 @@
   hosts: localhost
   remote_user: dhanush
   tasks:
-    - name: create backend deployment and service
+    - name: create backend deployment
       kubernetes.core.k8s:
-        definition: "{{ lookup('file', './backend-deployement-service.yaml') | from_yaml }}"
+        definition: "{{ lookup('file', './k8s-deploy-backend.yaml') | from_yaml }}"
+        state: present
+    - name: create backend service
+      kubernetes.core.k8s:
+        definition: "{{ lookup('file', './k8s-service-backend.yaml') | from_yaml }}" 
         state: present

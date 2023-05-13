@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployement
+  labels:
+    app: wescribe-backend
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: wescribe-backend
+  template: 
+    metadata:
+      labels:
+        app: wescribe-backend
+    spec:
+      containers:
+        - name: backend-container
+          image: dhanush29/wescribe-backend:latest
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 8000
