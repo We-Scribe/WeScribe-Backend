@@ -1,17 +1,44 @@
 ---
-- name: Deploying backend with Kubernetes
-  hosts: localhost
-  remote_user: dhanush
-
-  collections:
-    - community.kubernetes
-
+- name: Deploying backend on Kubernetes
+  hosts: host_machine
+  # remote_user: dhanush
+  # collections:
+  #   - community.kubernetes
   tasks:
-    - name: create backend deployment
-      kubernetes.core.k8s:
-        definition: "{{ lookup('file', './k8s-deploy-backend.yaml') | from_yaml }}"
-        state: present
-    - name: create backend service
-      kubernetes.core.k8s:
-        definition: "{{ lookup('file', './k8s-service-backend.yaml') | from_yaml }}" 
-        state: present
+
+    # - name: Check Minikube status
+    #   command: minikube status
+    #   register: minikube_status
+    #   changed_when: false
+    #   failed_when: false
+
+    - name: Start Minikube
+      become: false
+      # command: minikube start --cpus 4 --memory 8192
+      command: minikube start
+      when: "'Running' not in minikube_status.stdout"
+
+    - name: Installing Addons
+      become: false
+      command: minikube addons enable ingress
+      ignore_errors: true
+
+    - name: Applying K8s Command in Repository
+      shell: |
+        cd ./kubernetes/
+        kubectl delete -f .
+        kubectl apply -f .
+      changed_when: false
+      failed_when: false
+
+    - name: Wait for pod to become ready
+      shell: kubectl wait --for=condition=Ready pod -l app=wescribe-backend
+      register: wait_result
+      until: wait_result.rc == 0
+      retries: 10
+      delay: 10
+
+    - name: Applying migrations
+      shell: |
+        kubectl exec -it $(kubectl get pod -l app=wescribe-backend -o jsonpath="{.items[0].metadata.name}") -- bash /app/migrate.sh
+      when: wait_result.rc == 0
