@@ -51,18 +51,18 @@
   #   - community.kubernetes
   tasks:
 
-    - name: Check Minikube status
-      command: minikube status
-      # register: minikube_status
-      changed_when: false
-      failed_when: false
+    # - name: Check Minikube status
+    #   command: minikube status
+    #   # register: minikube_status
+    #   changed_when: false
+    #   failed_when: false
 
-    - name: Start Minikube
-      become: false
-      # command: minikube start
-      # when: true
-      command: minikube start
-      # when: "'Running' not in minikube_status.stdout"
+    # - name: Start Minikube
+    #   become: false
+    #   # command: minikube start
+    #   # when: true
+    #   command: minikube start
+    #   # when: "'Running' not in minikube_status.stdout"
 
     # - name: Installing Addons
     #   become: false
@@ -86,5 +86,5 @@
 
     - name: Applying migrations
       shell: |
-        kubectl exec -it $(kubectl get pod -l app=wescribe-backend -o jsonpath="{.items[0].metadata.name}") -- bash /app/migrate.sh
+        kubectl exec -it $(kubectl get pod -l app=wescribe-backend -o jsonpath="{.items[0].metadata.name}") -- bash /app/backend/migrate.sh
       when: wait_result.rc == 0
