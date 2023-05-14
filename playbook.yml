@@ -1,3 +1,48 @@
+# ---
+# - name: Deploying with Kubernetes
+#   hosts: localhost
+#   remote_user: dhamodhar
+#   tasks:
+#     # - name: delete existing deploy db
+#     #   kubernetes.core.k8s:
+#     #       definition: "{{ lookup('file', './kubernetes/deploy-db.yaml') | from_yaml }}"
+#     #       state: absent
+#     - name: create backend deploy db
+#       kubernetes.core.k8s:
+#         definition: "{{ lookup('file', './kubernetes/deploy-db.yaml') | from_yaml }}"
+#         state: present
+#     # - name: delete existing service db
+#     #   kubernetes.core.k8s:
+#     #     definition: "{{ lookup('file', './kubernetes/service-db.yaml') | from_yaml }}"
+#     #     state: absent
+#     - name: create service db
+#       kubernetes.core.k8s:
+#         definition: "{{ lookup('file', './kubernetes/service-db.yaml') | from_yaml }}"
+#         state: present
+#     # - name: delete existing pv
+#     #   kubernetes.core.k8s:
+#     #     definition: "{{ lookup('file', './kubernetes/persistent-volume.yaml') | from_yaml }}"
+#     #     state: absent
+#     - name: create pv
+#       kubernetes.core.k8s:
+#         definition: "{{ lookup('file', './kubernetes/persistent-volume.yaml') | from_yaml }}"
+#         state: present
+#     # - name: delete existing backend deployment
+#     #   kubernetes.core.k8s:
+#     #     definition: "{{ lookup('file', './kubernetes/deploy-backend.yaml') | from_yaml }}"
+#     #     state: absent
+#     - name: create backend deployment
+#       kubernetes.core.k8s:
+#         definition: "{{ lookup('file', './kubernetes/deploy-backend.yaml') | from_yaml }}"
+#         state: present
+#     # - name: delete existing backend service
+#     #   kubernetes.core.k8s:
+#     #     definition: "{{ lookup('file', './kubernetes/service-backend.yaml') | from_yaml }}" 
+#     #     state: absent
+#     - name: create backend service
+#       kubernetes.core.k8s:
+#         definition: "{{ lookup('file', './kubernetes/service-backend.yaml') | from_yaml }}" 
+#         state: present
 ---
 - name: Deploying backend on Kubernetes
   hosts: host_machine
@@ -6,23 +51,23 @@
   #   - community.kubernetes
   tasks:
 
-    # - name: Check Minikube status
-    #   command: minikube status
-    #   register: minikube_status
-    #   changed_when: false
-    #   failed_when: false
+    - name: Check Minikube status
+      command: minikube status
+      register: minikube_status
+      changed_when: false
+      failed_when: false
 
-    # - name: Start Minikube
-    #   become: false
-    #   # command: minikube start --cpus 4 --memory 8192
-    #   command: minikube start
-    #   when: true
-    #   # when: "'Running' not in minikube_status.stdout"
+    - name: Start Minikube
+      become: false
+      # command: minikube start
+      # when: true
+      command: minikube start --cpus 4 --memory 8192
+      when: "'Running' not in minikube_status.stdout"
 
-    # - name: Installing Addons
-    #   become: false
-    #   command: minikube addons enable ingress
-    #   ignore_errors: true
+    - name: Installing Addons
+      become: false
+      command: minikube addons enable ingress
+      ignore_errors: true
 
     - name: Applying K8s Command in Repository
       shell: |

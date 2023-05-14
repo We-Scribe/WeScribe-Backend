@@ -1,3 +1,3 @@
 cd /app/backend/
 
-/opt/venv/bin/python manage.py migrate --noinput
+python manage.py migrate --noinput
