@@ -61,13 +61,13 @@
       become: false
       # command: minikube start
       # when: true
-      command: minikube start --cpus 4 --memory 8192
+      command: minikube start
       # when: "'Running' not in minikube_status.stdout"
 
-    - name: Installing Addons
-      become: false
-      command: minikube addons enable ingress
-      ignore_errors: true
+    # - name: Installing Addons
+    #   become: false
+    #   command: minikube addons enable ingress
+    #   ignore_errors: true
 
     - name: Applying K8s Command in Repository
       shell: |
